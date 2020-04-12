@@ -1,0 +1,47 @@
+---
+- hosts: all
+  become: true
+    
+  tasks:
+    - name: Install Prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install haproxy
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'haproxy', 'awscli' ]
+    
+# Nginx Configuration
+    - name: Sets haproxy file
+      template:
+        src: "files/haproxy.cfg"
+        dest: "/etc/haproxy/haproxy.cfg"
+      notify: Restart Haproxy
+
+    - name: Sets ips file
+      template:
+        src: "files/ips.txt"
+        dest: "/etc/haproxy/ips.txt"
+
+    - name: Sets ha-check file
+      template:
+        src: "files/ha-check.sh"
+        dest: "/usr/local/bin/ha-check.sh"
+
+    - name: Check backends
+      cron:
+       name: "check backends"
+       minute: "*/3"
+       job: "bash /usr/local/bin/ha-check.sh"
+
+
+    - name: Reload Haproxy
+      service:
+        name: haproxy
+        state: reloaded
+
+    - name: Restart Haproxy
+      service:
+        name: haproxy
+        state: restarted
+

@@ -1,0 +1,66 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Install Prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install nginx and supervisor
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'nginx', 'supervisor' ]
+    
+# Nginx Configuration
+    - name: Sets Nginx config default file
+      template:
+        src: "files/nginx.conf.j2"
+        dest: "/etc/nginx/nginx.conf"
+      notify: Reload Nginx
+
+# Nginx Vhost default
+    - name: Sets Nginx vhost default file
+      template:
+        src: "files/vhost.conf.j2"
+        dest: "/etc/nginx/sites-available/default"
+
+    - name: Enables new site
+      file:
+        src: "/etc/nginx/sites-available/default"
+        dest: "/etc/nginx/sites-enabled/default"
+        state: link
+      notify: Reload Nginx
+
+# Supervisor config
+    - name: Sets supervisor config file
+      template:
+        src: "files/test-app.conf.j2"
+        dest: "/etc/supervisor/conf.d/testapp.conf"
+      notify: Restart Supervisor
+      
+# Copy app for initial image and testing if it works but doing it using userdata on autoscaling groups :)
+#    - synchronize: 
+#        src: test/
+#        dest: /opt/test
+#      notify: Restart Supervisor
+
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Reload Supervisor
+      service:
+        name: supervisor
+        state: reloaded
+
+    - name: Restart Supervisor
+      service:
+        name: supervisor
+        state: restarted

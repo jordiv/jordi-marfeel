@@ -1,0 +1,13 @@
+[program:testapp]
+command = /usr/bin/python3 -m http.server --cgi 8080
+process_name=testapp_%(program_name)s_%(process_num)03d
+numprocs=1
+directory=/opt/test
+autostart=true
+autorestart=true
+user=root
+stdout_logfile=/var/log/app.out.log
+stdout_logfile_maxbytes=256MB
+stderr_logfile=/var/log/app.out.log
+stderr_logfile_maxbytes=256MB
+
