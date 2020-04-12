@@ -44,6 +44,12 @@ This project is made for the test @ Marfeel.
 ```
 Sorry, my first time, respect my clumsyness :)
 
+## Autoscaling groups
+I've set up manually a scalling group + launch configuration from console, I know it can be launched from awscli everything but it's easier for me doing so than start investigating :)
+
+I used the image that I created the way I've been told.
+
+
 ## Comments
 Working on this been a total new way for working, never used ansible for a personal/test project. A total Yay/fail during two days :)
 
@@ -53,7 +59,9 @@ I spend a lot of time playing on Awscli, learning ansible, toying with haproxy a
 
 Take note that I'm not fluent in ansible, I did the best I could reading documentation by myself in 1 night, I'm sure it can be done better. Even doing the pre-setting on aws (vpcs, sg, keys, iams,...).
 
-I've set up this repo the best way I could preserving some "logic" to be nice to read fast.
+I've set up this repo the best way I could preserving some "logic" to be nice for reading fast.
+
+I did not had access to create IAM roles and assign the correct policy, so one thing I consider really harmful is to keep AWS credentials inside an ec2. Haproxy script requires those set up.
 
 ## Questions Answered
 
@@ -64,6 +72,8 @@ I asume that application could be down and a different cache must be set, if a d
 The static cache I feel it is too low even for google "pagespeed".
 
 - Which is the AMI id you created?
+
+    `ami-09de61ffaecfc301f`
 
 
 - Which code you added to user-data? 

@@ -16,6 +16,5 @@ IPLIST_MD5_NEW=$(md5sum ${IPLIST} | awk '{ print $1 }')
 sed -e "s/server1 .*\:80/server1 ${IP1}\:80/" -e "s/server2 .*\:80/server2 ${IP2}\:80/" -i "${HAPROXY_CONF}"
 
 # Check consistency and reload haproxy service
-haproxy -f "${HAPROXY_CONF}" -c && systemctl reload haproxy
-
+haproxy -f "${HAPROXY_CONF}" -c && service haproxy reload
 
