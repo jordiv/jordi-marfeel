@@ -5,6 +5,7 @@
 1. Linux Debian buster as base system
 2. Ansible
 3. awscli tools
+4. Vscode
 
 
 ## Overview
@@ -16,7 +17,7 @@ This project is made for the test @ Marfeel.
   - Change context from whatever region you're working on to eu-west-1
   - Fire initial wizard of vpc if it's not created
   - Setup vpc-sg for ec2 (22/80 to any)
-  - Create IAM role to allow actions from haproxy instance, You must ASSING THAT TO THE INSTANCE
+  - Create IAM role to allow actions from haproxy instance, You must ASSING THAT TO THE INSTANCE (nope)
   - Create a new pair under ec2/secret-keys and download it
   - Setup the ips on ansible hosts files
 
@@ -49,6 +50,8 @@ I've set up manually a scalling group + launch configuration from console, I kno
 
 I used the image that I created the way I've been told.
 
+Also I've Set tag "Environment:autoscale" to autoscale groups
+
 
 ## Comments
 Working on this been a total new way for working, never used ansible for a personal/test project. A total Yay/fail during two days :)
@@ -61,7 +64,7 @@ Take note that I'm not fluent in ansible, I did the best I could reading documen
 
 I've set up this repo the best way I could preserving some "logic" to be nice for reading fast.
 
-I did not had access to create IAM roles and assign the correct policy, so one thing I consider really harmful is to keep AWS credentials inside an ec2. Haproxy script requires those set up.
+I did not had access to create IAM roles and assign the correct policy, so one thing I consider really harmful is to keep AWS credentials inside an ec2 ( ~/.aws/*). Haproxy script requires those to set up.
 
 ## Questions Answered
 
