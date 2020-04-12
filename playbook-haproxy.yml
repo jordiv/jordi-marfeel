@@ -23,9 +23,9 @@
         src: "files/ha-check.sh"
         dest: "/usr/local/bin/ha-check.sh"
 
-    - name: Check backends
+    - name: Create crontab
       cron:
-       name: "check backends"
+       name: "create crontab"
        minute: "*/3"
        job: "/usr/local/bin/ha-check.sh"
 
