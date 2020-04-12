@@ -27,7 +27,7 @@
       cron:
        name: "check backends"
        minute: "*/3"
-       job: "bash /usr/local/bin/ha-check.sh"
+       job: "/usr/local/bin/ha-check.sh"
 
     - name: Reload Haproxy
       service:
