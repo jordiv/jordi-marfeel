@@ -46,7 +46,7 @@ This project is made for the test @ Marfeel.
 Sorry, my first time, respect my clumsyness :)
 
 ## Autoscaling groups
-I've set up manually a scalling group + launch configuration from console, I know it can be launched from awscli everything but it's easier for me doing so than start investigating :)
+I've set up manually a scalling group + launch configuration from AWS console, I know it can be launched from awscli/ansible everything but it's easier for me doing so than start investigating :)
 
 I used the image that I created the way I've been told.
 
@@ -58,13 +58,17 @@ Working on this been a total new way for working, never used ansible for a perso
 
 Using haproxy as load balancer and not aws ELB for detecting/Drain/add/wtv... for instances been really fun creating the script.
 
-I spend a lot of time playing on Awscli, learning ansible, toying with haproxy and its api that I never used before (I did not used for this), just for curiosity. Been really fun :).
+I spend a lot of time playing on awscli, learning ansible, toying with haproxy and its api that I never used before (I did not used for this), just for curiosity. Been really fun :).
 
-Take note that I'm not fluent in ansible, I did the best I could reading documentation by myself in 1 night, I'm sure it can be done better. Even doing the pre-setting on aws (vpcs, sg, keys, iams,...).
+Take note that I'm not fluent in ansible, I did the best I could reading documentation by myself in 1 night, I'm sure it can be done better. Even doing the pre-setting on aws (vpcs, sg, keys,...).
 
 I've set up this repo the best way I could preserving some "logic" to be nice for reading fast.
 
 I did not had access to create IAM roles and assign the correct policy, so one thing I consider really harmful is to keep AWS credentials inside an ec2 ( ~/.aws/*). Haproxy script requires those to set up.
+
+Encountered a problem, crontab doesn't use paths and the script was failing all the time, had to update it several times and do A LOT of testing. It required a lot of investigation because launching script from crontab did not found `haproxy` command, had to use `/usr/sbin/haproxy`.
+
+I rewrote the script not reading all file and rewritting it for reducing failure. I recreate the `haproxy.cfg` file everytime the ips are changed.
 
 ## Questions Answered
 
