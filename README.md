@@ -70,6 +70,13 @@ Encountered a problem, crontab doesn't use paths and the script was failing all 
 
 I rewrote the script not reading all file and rewritting it for reducing failure. I recreate the `haproxy.cfg` file everytime the ips are changed.
 
+## Machines
+
+- 172.31.46.240 is the haproxy machine where the crontab is running I launched it and using playbook-haproxy for provision.
+- 172.31.41.210 is the pre-image machine that I launched it and provisioned it with playbook-img
+
+Autoscalling is running smoothly. (Really, I've tested many times!!) :)
+
 ## Questions Answered
 
 - Why do you think different cache times for the nginx cache and for the browser...
